@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+instance/
+.env
+.DS_Store
+.vscode/
+.idea/
+.agents/
+insert_poem.py

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row align-items-center justify-content-center text-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0 bg-white rounded-3 p-5">
+                <h1 class="display-4 fw-bold text-primary mb-4">歡迎來到線上算命系統 🏮</h1>
+                <p class="lead text-muted mb-4">
+                    在這裡，您可以進行線上求籤、抽籤，並查看詳細的詩籤解釋。<br>
+                    無論是學業、事業、感情或是健康，讓神明為您指引方向。
+                </p>
+                <hr class="my-4">
+                <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+                    <a class="btn btn-primary btn-lg px-4 gap-3 shadow-sm" href="{{ url_for('divination.index') }}" role="button">進入測算大廳</a>
+                    {% if not session.get('user_id') %}
+                        <a class="btn btn-outline-secondary btn-lg px-4 shadow-sm" href="{{ url_for('auth.register_page') }}" role="button">立即註冊</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-lg-8 text-center mb-4">
+        <h2 class="display-6 fw-bold text-success">🙏 香油錢與祈福</h2>
+        <p class="text-muted fs-5 mt-2">捐獻香油錢，護持廟宇，為自己與家人祈求平安順遂。</p>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-7">
+        <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-header bg-success text-white py-4 text-center rounded-top-4">
+                <h4 class="mb-0 fw-bold">結緣金表單</h4>
+            </div>
+            <div class="card-body p-4 p-md-5 bg-white">
+                <form action="{{ url_for('donation.pay') }}" method="POST">
+                    
+                    <!-- 金額選擇 -->
+                    <div class="mb-5">
+                        <label class="form-label fw-bold text-secondary fs-5 mb-3 border-bottom w-100 pb-2">請選擇結緣金額</label>
+                        <div class="row g-3">
+                            <div class="col-6 col-sm-3">
+                                <input type="radio" class="btn-check" name="amount" id="amt1" value="100" autocomplete="off" checked>
+                                <label class="btn btn-outline-success w-100 py-2 fw-bold" for="amt1">NT$ 100</label>
+                            </div>
+                            <div class="col-6 col-sm-3">
+                                <input type="radio" class="btn-check" name="amount" id="amt2" value="300" autocomplete="off">
+                                <label class="btn btn-outline-success w-100 py-2 fw-bold" for="amt2">NT$ 300</label>
+                            </div>
+                            <div class="col-6 col-sm-3">
+                                <input type="radio" class="btn-check" name="amount" id="amt3" value="500" autocomplete="off">
+                                <label class="btn btn-outline-success w-100 py-2 fw-bold" for="amt3">NT$ 500</label>
+                            </div>
+                            <div class="col-6 col-sm-3">
+                                <input type="radio" class="btn-check" name="amount" id="amt4" value="1000" autocomplete="off">
+                                <label class="btn btn-outline-success w-100 py-2 fw-bold" for="amt4">NT$ 1000</label>
+                            </div>
+                            <div class="col-12 mt-3">
+                                <div class="input-group input-group-lg shadow-sm">
+                                    <span class="input-group-text bg-light border-success text-success fw-bold">其他金額</span>
+                                    <input type="number" class="form-control border-success" name="custom_amount" id="custom_amount" min="1" placeholder="輸入金額（若輸入將覆蓋上方選項）">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <script>
+                        // 如果在自訂金額輸入，取消 Radio 按鈕選取
+                        document.getElementById('custom_amount').addEventListener('input', function() {
+                            if (this.value) {
+                                const radios = document.querySelectorAll('input[name="amount"]');
+                                radios.forEach(r => r.checked = false);
+                            } else {
+                                document.getElementById('amt1').checked = true;
+                            }
+                        });
+                        // 點擊選項則清空自訂金額
+                        document.querySelectorAll('input[name="amount"]').forEach(r => {
+                            r.addEventListener('change', function() {
+                                document.getElementById('custom_amount').value = '';
+                            });
+                        });
+                    </script>
+
+                    <!-- 祈願內容 -->
+                    <div class="mb-4">
+                        <label for="message" class="form-label fw-bold text-secondary fs-5 mb-3 border-bottom w-100 pb-2">祈福心願 (選填)</label>
+                        <textarea class="form-control border-success p-3" id="message" name="message" rows="4" placeholder="請填寫您想對神明祈求的話語或祝福..."></textarea>
+                    </div>
+
+                    <!-- 聯絡方式 -->
+                    <div class="mb-4">
+                        <label for="donor_name" class="form-label fw-bold text-secondary fs-5 mb-3 border-bottom w-100 pb-2">聯絡資訊</label>
+                        <div class="mb-3">
+                            <label class="form-label text-muted">捐獻者姓名</label>
+                            <input type="text" class="form-control form-control-lg border-success" id="donor_name" name="donor_name" value="{{ user.username if user else '' }}" placeholder="您的姓名" required>
+                        </div>
+                    </div>
+
+                    <div class="d-grid mt-5">
+                        <button type="submit" class="btn btn-success btn-lg rounded-pill shadow fw-bold py-3 fs-5">
+                            🙏 心意送出並付款 <i class="bi bi-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

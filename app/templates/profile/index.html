@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <!-- 左側基本資料區塊 -->
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm border-0 rounded-3">
+            <div class="card-header bg-info text-dark">
+                <h5 class="mb-0 mx-2 my-1"><i class="bi bi-person-circle"></i> 會員基本資料</h5>
+            </div>
+            <div class="card-body text-center p-4">
+                <div class="bg-light rounded-circle d-inline-block p-4 mb-3">
+                    <h2>👤</h2>
+                </div>
+                <h4 class="card-title">{{ user.username }}</h4>
+                <p class="text-muted">{{ user.email }}</p>
+                <p class="mb-0 text-muted small">註冊時間：{{ user.created_at }}</p>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm border-0 rounded-3 mt-4">
+            <div class="card-body text-center p-4">
+                <p class="mb-2 text-muted">目前累積善款</p>
+                <h2 class="text-success mb-3">NT$ {{ user_total_donation | default(0) }}</h2>
+                <a href="{{ url_for('donation.index') }}" class="btn btn-outline-success btn-sm">前往捐獻祈福</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 右側紀錄明細區塊 -->
+    <div class="col-md-8">
+        <!-- 歷史占卜紀錄 -->
+        <div class="card shadow-sm border-0 rounded-3 mb-4">
+            <div class="card-header bg-white border-bottom">
+                <h5 class="mb-0 text-primary py-1">📜 歷史占卜紀錄</h5>
+            </div>
+            <div class="card-body p-0">
+                {% if divination_records %}
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>日期</th>
+                                <th>籤詩編號</th>
+                                <th>吉凶</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for record in divination_records %}
+                            <tr>
+                                <td class="align-middle">{{ record.created_at }}</td>
+                                <td class="align-middle">第 {{ record.poem_number | default(record.poem_id) }} 籤</td>
+                                <td class="align-middle">
+                                    <span class="badge bg-secondary">{{ record.level | default("大吉") }}</span>
+                                </td>
+                                <td class="align-middle">
+                                    <button class="btn btn-sm btn-outline-primary" onclick="alert('籤詩內容詳見大廳解籤')">查看詳解</button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="p-4 text-center text-muted">
+                    <p class="mb-2">您還沒有任何占卜紀錄哦！</p>
+                    <a href="{{ url_for('divination.index') }}" class="btn btn-primary btn-sm mt-2">前往測算</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- 香油錢捐獻紀錄 -->
+        <div class="card shadow-sm border-0 rounded-3">
+            <div class="card-header bg-white border-bottom">
+                <h5 class="mb-0 text-success py-1">🙏 香油錢祈福紀錄</h5>
+            </div>
+            <div class="card-body p-0">
+                {% if donation_records %}
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>日期</th>
+                                <th>交易序號</th>
+                                <th>金額</th>
+                                <th>狀態</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for record in donation_records %}
+                            <tr>
+                                <td class="align-middle">{{ record.created_at }}</td>
+                                <td class="align-middle" style="font-family: monospace;">{{ record.transaction_id[:8] }}...</td>
+                                <td class="align-middle text-success fw-bold">NT$ {{ record.amount }}</td>
+                                <td class="align-middle">
+                                    <span class="badge bg-success">{{ record.payment_status }}</span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="p-4 text-center text-muted">
+                    <p class="mb-0">您還沒有香油錢捐款紀錄。</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

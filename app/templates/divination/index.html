@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12 text-center mb-5 mt-4">
+        <h2 class="display-5 text-primary fw-bold">⛩️ 測算大廳</h2>
+        <p class="lead text-muted">誠心默念您心中的疑問，讓神明為您解答。</p>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5 mb-4">
+        <div class="card h-100 shadow-sm border-0 rounded-4 text-center p-4 hover-card" style="transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 1rem 3rem rgba(0,0,0,.175)!important';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 .125rem .25rem rgba(0,0,0,.075)!important';">
+            <div class="card-body">
+                <div class="display-1 mb-3">🎋</div>
+                <h3 class="card-title fw-bold text-dark">觀音靈籤</h3>
+                <p class="card-text text-muted mb-4 mt-3">包含一百支籤詩，最為常見的求籤方式，解答運途、事業、感情、健康等各種疑難雜症。</p>
+                <a href="{{ url_for('divination.draw') }}" class="btn btn-primary btn-lg d-grid rounded-pill fw-bold mt-auto shadow-sm">進入求籤</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-5 mb-4">
+        <div class="card h-100 shadow-sm border-0 rounded-4 text-center p-4 bg-light text-muted">
+            <div class="card-body">
+                <div class="display-1 mb-3 opacity-50">🌗</div>
+                <h3 class="card-title fw-bold">線上擲筊</h3>
+                <p class="card-text mb-4 mt-3">單純向神明請示吉凶可否，以聖筊、笑筊、陰筊來判斷神明意旨。敬請期待。</p>
+                <button class="btn btn-secondary btn-lg d-grid rounded-pill fw-bold mt-auto" disabled>即將推出</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

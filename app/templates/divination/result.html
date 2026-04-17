@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center mt-4">
+    <div class="col-lg-8">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold text-primary">求籤結果</h2>
+            <p class="text-muted">神明賜予您的指引</p>
+        </div>
+
+        <div class="card shadow-lg border-0 rounded-4 overflow-hidden mb-5">
+            <!-- 卡片頂部設計 -->
+            <div class="bg-warning text-dark text-center py-4">
+                <h3 class="mb-0 fw-bold">第 {{ poem.id }} 籤</h3>
+                <h4 class="mt-2 mb-0 border d-inline-block px-4 py-1 bg-white rounded text-danger shadow-sm">{{ poem.type }}</h4>
+            </div>
+            
+            <div class="card-body p-5">
+                <!-- 籤詩內容 -->
+                <div class="poem-content text-center mb-5">
+                    <p class="fs-4 fw-bold mb-0 text-dark" style="line-height: 2.5; letter-spacing: 2px;">
+                        {% for line in poem.content.split('，') %}
+                            {% if line.strip() %}
+                                {{ line.strip() }}{% if not loop.last %}，<br>{% else %}。{% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                </div>
+
+                <hr class="mb-4">
+
+                <!-- 詳解 -->
+                <div class="poem-explanation px-md-4">
+                    <h5 class="fw-bold text-secondary mb-3 border-bottom pb-2">籤詩詳解</h5>
+                    <p class="text-muted fs-5" style="white-space: pre-line; line-height: 2;">{{ poem.explanation }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <a href="{{ url_for('divination.draw') }}" class="btn btn-outline-primary btn-lg rounded-pill px-5 me-md-3 mb-3 shadow-sm">重新求籤</a>
+            <a href="{{ url_for('divination.index') }}" class="btn btn-primary btn-lg rounded-pill px-5 mb-3 shadow-sm">回到測算大廳</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
